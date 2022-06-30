@@ -13,8 +13,6 @@ export default withIronSessionApiRoute(
         password
       })
 
-      console.log('email', email)
-      console.log('password', password)
       const loginResponseBody = await loginResponse.json()
 
       if (loginResponse.status == 200) {
