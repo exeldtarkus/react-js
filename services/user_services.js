@@ -2,8 +2,9 @@ const querystring = require('querystring')
 const { users } = require('../config/services')
 
 const operatorSignIn = (data) => {
+  const url = `${users.url}/api/operators/login`
 
-  return fetch(`${users.url}/api/operators/login`, {
+  return fetch(url, {
     method: 'POST',
     body: JSON.stringify(data),
     headers: {
