@@ -8,7 +8,7 @@ pipeline {
     }
         
     stages {    
-        stage('build ms-moservice-operator-web') {
+        stage('build ms-moservice-operator-web.') {
             steps {
                 build job: 'ms-moservice-operator-web', wait: false
             }
