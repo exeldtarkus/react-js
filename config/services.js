@@ -10,10 +10,10 @@ const services = {
   },
 }
 
-if (environment == 'production') {
-  services.local.url = 'https://operator.moservice.id/'
-  services.users.url = 'https://apiusers.moservice.id'
-}
+// if (environment == 'production') {
+//   services.local.url = 'https://operator.moservice.id/'
+//   services.users.url = 'https://apiusers.moservice.id'
+// }
 
 module.exports = {
   local: services.local,
