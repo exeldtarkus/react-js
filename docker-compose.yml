@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  mos-operator-web:
+    image: node:16.16.0-alpine
+    container_name: mos-operator-web
+    command:
+      - /bin/sh
+      - -c
+      - |
+        cd /www
+        chown root .
+        export NODE_ENV=production
+        /usr/local/bin/npm cache clean
+        /usr/local/bin/npm install;
+        /usr/local/bin/npm run build;
+        /usr/local/bin/npm run start;
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/www
+    env_file:
+      - .env
