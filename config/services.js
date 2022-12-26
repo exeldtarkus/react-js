@@ -6,7 +6,7 @@ const services = {
     url: 'localhost:3000'
   },
   users: {
-    url: 'https://apiusers-dev.moservice.id'
+    url: 'https://apiusers2-dev.moservice.id'
   },
 }
 
