@@ -20,3 +20,4 @@ module.exports = {
   local: services.local,
   users: services.users,
 }
+

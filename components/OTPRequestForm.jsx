@@ -26,30 +26,32 @@ const animate = {
 
 const OTPRequestForm = ({ doRequest, doCheck, incrementCounter }) => {
 
-  const [isDisabled, setIsDisabled] = useState(true)
+  const [isDisabled, setIsDisabled] = useState(false)
 
-  const RequestOTPSchema = Yup.object().shape({
-    email: Yup.string().ensure().when('isEmail', {
-      is: '1',
-      then: Yup.string()
-        .email('Email tidak valid')
-        .required('No HP/Email tidak boleh kosong'),
-      otherwise: Yup.string()
-        .min(8, 'No HP minimal 8 digit')
-        .required('No HP/Email tidak boleh kosong')
-    }).test(
-      'exist',
-      'Tidak ditemukan OTP dengan No HP/Email tersebut',
-      async (value) => {
-        if (value.length > 3) {
-          const check = await doCheck(value)
-          setIsDisabled(!check)
-          return check
-        }
-        return true
-      }
-    )
-  })
+  const RequestOTPSchema = Yup.object().shape()
+
+  // const RequestOTPSchema = Yup.object().shape({
+  //   email: Yup.string().ensure().when('isEmail', {
+  //     is: '1',
+  //     then: Yup.string()
+  //       .email('Email tidak valid')
+  //       .required('No HP/Email tidak boleh kosong'),
+  //     otherwise: Yup.string()
+  //       .min(8, 'No HP minimal 8 digit')
+  //       .required('No HP/Email tidak boleh kosong')
+  //   }).test(
+  //     'exist',
+  //     'Tidak ditemukan OTP dengan No HP/Email tersebut',
+  //     async (value) => {
+  //       if (value.length > 3) {
+  //         const check = await doCheck(value)
+  //         setIsDisabled(!check)
+  //         return check
+  //       }
+  //       return true
+  //     }
+  //   )
+  // })
 
   const formik = useFormik({
     initialValues: {
@@ -58,13 +60,30 @@ const OTPRequestForm = ({ doRequest, doCheck, incrementCounter }) => {
     },
     validationSchema: RequestOTPSchema,
     onSubmit: ({ email }, { setSubmitting }) => {
-      console.log('submitting...')
+
+      if (email == "") {
+        alert('No HP/Email tidak boleh kosong')
+        setSubmitting(false)
+        return
+      }
+
+      console.log('submitting... ', email)
       setTimeout(async () => {
+        const responseCheck = await doCheck(email)
+        console.log(responseCheck)
+
+        if (responseCheck == false) {
+          alert('Tidak ditemukan OTP dengan No HP/Email tersebut')
+          setSubmitting(false)
+          return
+        }
+
         const response = await doRequest(email)
 
         if (response == false) {
           alert('Request gagal tolong cek kembali inputan anda')
           setSubmitting(false)
+          return
         }
 
         setSubmitting(false)
@@ -108,7 +127,6 @@ const OTPRequestForm = ({ doRequest, doCheck, incrementCounter }) => {
               helperText={touched.email && errors.email}
               onChange={(event) => {
                 handleChange('email')(event)
-                console.log(values.email)
                 if (Number(values.email)) {
                   handleChange('isEmail')('0')
                 } else {
