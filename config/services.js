@@ -3,16 +3,15 @@ console.log(environment)
 
 const services = {
   local: {
-    url: 'localhost:3000'
+    url: 'https://operator-dev.moservice.id/'
   },
   users: {
-    // url: 'https://apiusers-dev.moservice.id'
     url: 'https://apiusers2-dev.moservice.id'
   },
 }
 
 if (environment == 'production') {
-  services.local.url = 'localhost:3000'
+  services.local.url = 'https://operator.moservice.id/'
   services.users.url = 'https://apiusers.moservice.id'
 }
 
