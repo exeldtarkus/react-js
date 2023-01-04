@@ -6,7 +6,7 @@ const services = {
     url: 'https://operator-dev.moservice.id/'
   },
   users: {
-    url: 'https://apiusers2-dev.moservice.id'
+    url: 'https://apiusers-dev.moservice.id'
   },
 }
 
